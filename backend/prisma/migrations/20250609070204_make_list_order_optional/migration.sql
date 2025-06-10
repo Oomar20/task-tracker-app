@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "List" ALTER COLUMN "order" DROP NOT NULL;
