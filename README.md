@@ -1,4 +1,4 @@
-    # 	Task Tracker App
+# Task Tracker App
 
 This task tracking application was built with NestJS and React. Users can sign up, authenticate via JWT, create boards, lists, and cards, and manage them with create/read/update/delete operations. Includes pagination, seeding, and Docker Compose for local development.
 
