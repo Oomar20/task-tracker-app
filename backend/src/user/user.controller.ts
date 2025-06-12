@@ -1,8 +1,9 @@
-import { Controller, UseGuards, Request, Get, Query } from '@nestjs/common';
+import { Controller, UseGuards, Request, Get, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService, Page } from './user.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import type { User } from '@prisma/client';
+
 
 @Controller('user')
 export class UserController {
@@ -14,11 +15,17 @@ export class UserController {
         return { userId: req.user.userId, email: req.user.email };
     }
 
-    @UseGuards(AuthGuard('jwt'))
     @Get()
+    @UsePipes(
+        new ValidationPipe({
+            transform: true,
+            whitelist: true,
+        }),
+    )
     async findAll(
-        @Query() { skip = 0, take = 10 }: PaginationDto,
+        @Query() { page = 1, take = 10 }: PaginationDto,
     ): Promise<Page<User>> {
-        return this.userService.findAll({ skip, take });
+        const skip = (page - 1) * take;
+        return this.userService.findAll({ skip, take, page });
     }
 }

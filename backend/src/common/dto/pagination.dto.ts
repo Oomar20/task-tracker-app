@@ -6,7 +6,7 @@ export class PaginationDto {
     @Type(() => Number)
     @IsInt()
     @Min(0)
-    skip?: number;
+    page?: number;
 
     @IsOptional()
     @Type(() => Number)
